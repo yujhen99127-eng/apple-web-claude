@@ -1,0 +1,137 @@
+/* FMS-1 dashboard — Figma node 799:741 (1920 × 1080 design canvas) */
+:root {
+  --bg: #0e1714;
+  --white: #fff;
+  --secondary: #c1e1f3;
+  --accent-01: #fec901;   /* A */
+  --accent-02: #35bfff;   /* B */
+  --primary-01: #3ff3d8;  /* C */
+  --primary-03: #befff7;  /* D / button bg */
+  --card-text-dark: #19394c;
+  --card-grad-from: #172c2a;
+  --card-grad-to: #1c4e59;
+  --font: "Roboto", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+
+  /* chart geometry (px on the 1920×1080 canvas) */
+  --chart-left: 567px;
+  --chart-width: 1290px;
+  --chart-top: 105px;
+  --chart-height: 276px; /* 0 → 1000 */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; background: var(--bg); overflow: hidden; }
+
+body { font-family: var(--font); color: var(--white); line-height: 1.172; } /* ≈ Roboto "normal", keeps CJK fallback from inflating rows */
+
+/* Fixed design canvas, scaled to the viewport by app.js */
+.stage {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1920px; height: 1080px;
+  background: var(--bg);
+  transform-origin: 0 0;
+  overflow: hidden;
+}
+
+.logo { position: absolute; left: 30px; top: 12px; width: 320px; height: 116.656px; object-fit: cover; }
+
+/* ── KPIs ── */
+.kpi { position: absolute; left: 68px; display: flex; flex-direction: column; gap: 6px; font-weight: 500; }
+.kpi--month  { top: 148px; }
+.kpi--gradeA { top: 299px; }
+.kpi__title { font-size: 32px; font-weight: 500; letter-spacing: 1.6px; color: var(--secondary); white-space: nowrap; }
+.kpi__value { display: flex; align-items: center; gap: 24px; font-size: 64px; letter-spacing: 3.2px; white-space: nowrap; }
+.kpi__unit  { font-size: 32px; letter-spacing: 1.6px; color: var(--secondary); }
+
+/* ── Chart ── */
+.chart { position: absolute; inset: 0; pointer-events: none; }
+.chart > * { pointer-events: auto; }
+
+.meta { position: absolute; left: 1346px; top: 48px; display: flex; gap: 32px; font-size: 18px; letter-spacing: .9px; white-space: nowrap; }
+.legend { list-style: none; display: flex; gap: 12px; }
+.legend li { display: flex; align-items: center; gap: 12px; }
+.legend i { display: block; width: 32px; height: 12px; }
+
+.y-axis {
+  position: absolute; left: 490px; top: 95px;
+  display: flex; flex-direction: column; gap: 32px;
+  font-size: 18px; letter-spacing: .9px; text-align: center;
+}
+
+.grid-lines { position: absolute; left: 542px; top: 0; width: 1318px; height: 0; }
+.grid-lines img { position: absolute; left: 0; width: 1318px; height: 1px; display: block; }
+
+.bars {
+  position: absolute; left: var(--chart-left); top: var(--chart-top);
+  width: var(--chart-width); height: var(--chart-height);
+  display: grid; grid-template-columns: repeat(31, 1fr); column-gap: 16px;
+  align-items: end; justify-items: center;
+}
+.bar { display: flex; flex-direction: column; width: 12px; cursor: default; }
+.bar span { display: block; width: 12px; }
+.bar .a { background: var(--accent-01); }
+.bar .b { background: var(--accent-02); }
+.bar .c { background: var(--primary-01); }
+.bar .d { background: var(--primary-03); }
+.bar:hover { filter: brightness(1.15); }
+
+.x-axis {
+  position: absolute; left: var(--chart-left); top: 397px; width: var(--chart-width);
+  display: grid; grid-template-columns: repeat(31, 1fr); column-gap: 16px;
+  font-size: 18px; letter-spacing: .9px; text-align: center;
+}
+
+.tooltip {
+  position: absolute; top: 121px;
+  padding: 4px 8px; border-radius: 4px;
+  background: rgba(255, 255, 255, .75); color: var(--bg);
+  font-size: 16px; letter-spacing: .8px; text-align: center; white-space: nowrap;
+  transform: translateX(-50%); pointer-events: none;
+}
+
+/* ── Log card ── */
+.log {
+  position: absolute; left: 60px; top: 450px; width: 1800px;
+  display: flex; flex-direction: column; gap: 36px;
+  padding: 28px 32px; border-radius: 24px;
+  background: linear-gradient(to bottom, var(--card-grad-from), var(--card-grad-to));
+}
+.log__head { display: flex; align-items: center; justify-content: space-between; }
+.log__head-left { display: flex; align-items: center; gap: 24px; }
+.log__dot { display: block; margin-right: -8px; }
+.log__title { font-size: 32px; font-weight: 500; letter-spacing: 1.6px; color: var(--secondary); white-space: nowrap; margin-left: 0; }
+.log__live { font-size: 18px; letter-spacing: .9px; white-space: nowrap; }
+
+.more-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border: 0; border-radius: 8px;
+  background: var(--primary-03); color: var(--bg);
+  font: 400 18px/normal var(--font); letter-spacing: .9px; cursor: pointer;
+  transition: filter .15s;
+}
+.more-btn:hover { filter: brightness(.92); }
+.more-btn:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+
+/* 10 items, 5 per column, filled column by column */
+.log__list {
+  list-style: none;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column; column-gap: 32px; row-gap: 24px;
+}
+.item { display: flex; align-items: flex-start; gap: 20px; min-width: 0; }
+.item__no {
+  flex: none; width: 32px; height: 32px; border-radius: 8px;
+  display: grid; place-items: center;
+  background: var(--accent-01); color: var(--card-text-dark);
+  font-size: 20px; font-weight: 700;
+}
+.item__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; white-space: nowrap; }
+.item__title { display: flex; gap: 8px; font-size: 28px; font-weight: 700; letter-spacing: 1.4px; }
+.item__desc { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.item__meta { display: flex; align-items: center; gap: 24px; color: var(--secondary); }
+.item__plate { display: flex; gap: 12px; font-size: 28px; letter-spacing: 1.4px; }
+.item__plate b { font-weight: 700; }
+.item__plate span { font-weight: 500; }
+.item__time { display: flex; gap: 8px; font-size: 18px; letter-spacing: .9px; }
